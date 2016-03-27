@@ -55,6 +55,7 @@ public class Activity_login extends AppCompatActivity  implements View.OnClickLi
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        ActivityCollector.addActivity(this);
         pref = PreferenceManager.getDefaultSharedPreferences(this);
         et_user = (EditText)findViewById(R.id.et_username);
         et_passwd = (EditText)findViewById(R.id.et_password);
@@ -84,6 +85,11 @@ public class Activity_login extends AppCompatActivity  implements View.OnClickLi
     }
 
     @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        ActivityCollector.removeActivity(this);
+    }
+    @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.bt_login:
@@ -99,17 +105,19 @@ public class Activity_login extends AppCompatActivity  implements View.OnClickLi
                     Toast.makeText(Activity_login.this, "请输入密码", Toast.LENGTH_SHORT).show();
                     break;
                 }
-                if (!isInternetAvailable(this)) {
+                if (!HttpUtil.isInternetAvailable(this)) {
                     Toast.makeText(Activity_login.this, "没有可用网络", Toast.LENGTH_SHORT).show();
                     break;
                 }
+                Log.d(TAG, "this");
                 isconnect = false;
-                //此处需要注意执行远程登录函数时，有可能已经主线程的函数已经
-                LoginConnect(user, passwd);
                 progressDialog = new ProgressDialog(Activity_login.this);
                 progressDialog.setMessage("Loading...");
                 progressDialog.setCancelable(false);
                 progressDialog.show();
+                //此处需要注意执行远程登录函数时，有可能已经主线程的函数已经执行完了
+                LoginConnect(user, passwd);
+
                 try {
                     Thread.sleep(1000); //暂停，每一秒输出一次
                 }catch (InterruptedException e) {
@@ -131,13 +139,13 @@ public class Activity_login extends AppCompatActivity  implements View.OnClickLi
                     editor.commit();
                     //write here
                     Log.d(TAG, "toMainactivity");
-                    Intent intent = new Intent(Activity_login.this, MainActivity.class);
+                    Intent intent = new Intent(Activity_login.this, Activity_user.class);
                     intent.putExtra("token", str_token);
                     startActivity(intent);
                     finish();
                 } else {
                     progressDialog.dismiss();
-                    Toast.makeText(Activity_login.this, "连接超时或账号或密码错误", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Activity_login.this, "连接超时或账号密码错误", Toast.LENGTH_SHORT).show();
                 }
                 break;
             }
@@ -166,19 +174,12 @@ public class Activity_login extends AppCompatActivity  implements View.OnClickLi
         }
         return tmp.toString();
     }
-    public boolean isInternetAvailable(Context context) {
-        ConnectivityManager connectivityManager = (ConnectivityManager)
-                getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
-        if (networkInfo != null && networkInfo.isAvailable())
-            return true;
-        else return false;
-    }
-    public void LoginConnect(String user, String passwd) {
+
+    public boolean LoginConnect(String user, String passwd) {
         //write here
 
         Log.d(TAG, user + "tryconnect");
-        HttpUtil.sendHttpRequest(Hostname.hostname+"username/" + user + "/" + passwd + "/",
+        boolean res = HttpUtil.sendHttpRequest(Activity_login.this, Hostname.hostname+"username/" + user + "/" + passwd + "/",
                 new HttpCallbackListener() {
                     @Override
                     public void onFinish(String response) {
@@ -202,6 +203,8 @@ public class Activity_login extends AppCompatActivity  implements View.OnClickLi
                 }
         );
         Log.d(TAG, "inconnect");
+        if (res) return true;
+        else return false;
 
     }
 

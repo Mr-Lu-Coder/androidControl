@@ -1,7 +1,8 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
-
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <include layout="@layout/mytitle"/>
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/id_swiperefresh"
         android:layout_width="match_parent"
@@ -30,4 +31,4 @@
         android:text="当前用户列表为空"
         android:textSize="20dp"/>
 
-</RelativeLayout>
+</LinearLayout>

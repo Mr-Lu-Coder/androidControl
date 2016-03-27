@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.BaseAdapter;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -19,9 +20,9 @@ import java.util.List;
 
 public class PersonAdapter extends BaseAdapter {
 
-    private LinkedList<Person> mData;
+    private ArrayList<Person> mData;
     private Context mContext;
-    public PersonAdapter(LinkedList<Person> mData, Context mContext) {
+    public PersonAdapter(ArrayList<Person> mData, Context mContext) {
         this.mData = mData;
         this.mContext = mContext;
     }

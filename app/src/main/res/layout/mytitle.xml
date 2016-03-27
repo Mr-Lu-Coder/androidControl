@@ -14,9 +14,9 @@
         android:layout_height="wrap_content"
         android:text="返回"
         android:textSize="20dp"
-        android:textColor="#cc6633"
-        android:id="@+id/button" />
+        android:id="@+id/button_back" />
     <TextView
+        android:id="@+id/tv_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
@@ -28,6 +28,5 @@
         android:layout_height="wrap_content"
         android:text="编辑"
         android:textSize="20dp"
-        android:textColor="#ff3333"
-        android:id="@+id/button2" />
+        android:id="@+id/button_edit" />
 </LinearLayout>

@@ -1,10 +1,12 @@
 package com.example.test.app01;
 
+import java.io.Serializable;
+
 /**
  * Created by lushangqi on 2016/3/10.
  */
 
-public class Person {
+public class Person implements Serializable {
     private String id;
     private String name;
     private String role;

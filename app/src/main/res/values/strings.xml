@@ -1,11 +1,12 @@
 <resources>
     <string name="app_name">App01</string>
     <string name="action_settings">Settings</string>
-    <string name="pull_to_refresh">下拉可以刷新</string>
-    <string name="release_to_refresh">释放立即刷新</string>
-    <string name="refreshing">正在刷新…</string>
-    <string name="not_updated_yet">暂未更新过</string>
-    <string name="updated_at">上次更新于%1$s前</string>
-    <string name="updated_just_now">刚刚更新</string>
-    <string name="time_error">时间有问题</string>
+    <string name="person_add">添加用户</string>
+    <string name="person_detail">详细信息</string>
+    <string name="action_add01">注册用户</string>
+    <string name="action_add02">注册机器</string>
+    <string name="compute_add">添加机器</string>
+    <string name="compute_info">机器信息</string>
+    <string name="compute_message">机器状态</string>
+
 </resources>
