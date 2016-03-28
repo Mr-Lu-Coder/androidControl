@@ -22,7 +22,7 @@ public class Activity_group extends AppCompatActivity {
     private String TAG = new String("groupActivity");
     private final int GROUP_REFRESH = 0;
     private final int GROUP_INIT = 1;
-
+    private final int GROUP_ERROR = 2;
     private SwipeRefreshLayout swipegroupRefreshLayout;
     private ExpandableListView expandableListView;
     private MyExpandableAdapter myExpandableAdapter;
@@ -51,6 +51,7 @@ public class Activity_group extends AppCompatActivity {
         Intent intent = getIntent();
         token = intent.getStringExtra("token");
         Log.d(TAG, token);
+        //获得从user活动传来的所有的person
         personData = (ArrayList<Person>)intent.getSerializableExtra("person_data");
         //获得title
         bt_back = (Button)findViewById(R.id.button_back);
@@ -96,6 +97,22 @@ public class Activity_group extends AppCompatActivity {
 
         myExpandableAdapter = new MyExpandableAdapter(personData, computersData, mContext);
         expandableListView.setAdapter(myExpandableAdapter);
+        expandableListView.setOnGroupClickListener(
+                new ExpandableListView.OnGroupClickListener() {
+            @Override
+            public boolean onGroupClick(ExpandableListView parent,
+                                        View v, int groupPosition, long id) {
+                Log.d(TAG, groupPosition+"+"+id);
+                Log.d(TAG, computersData.size()+"");
+                if (computersData != null && computersData.size() >= groupPosition+1 &&
+                         computersData.get(groupPosition).size()>0)
+                    return false;
+                else {
+                    Toast.makeText(Activity_group.this, "该用户暂时没有管理机器", Toast.LENGTH_SHORT).show();
+                    return true;
+                }
+            }
+        });
         expandableListView.setOnChildClickListener(
                 new ExpandableListView.OnChildClickListener() {
             @Override
@@ -109,6 +126,8 @@ public class Activity_group extends AppCompatActivity {
         });
 
     }
+
+
 
     public void groupListInit(final int state) {
         switch (state) {

@@ -35,6 +35,7 @@ public class Activity_user extends AppCompatActivity implements AdapterView.OnIt
     //about user
     private final int REFRESH_OK = 0;
     private final int HTTP_INIT = 1;
+    private final int HTTP_ERROR = 1;
     private SwipeRefreshLayout swipeRefreshLayout;
     private ListView listView;
     private PersonAdapter mAdapter = null;
@@ -83,6 +84,12 @@ public class Activity_user extends AppCompatActivity implements AdapterView.OnIt
                         mData.add(person);
                     }
                     mAdapter.notifyDataSetChanged();
+                    break;
+                default:
+                    Toast.makeText(Activity_user.this, "刷新失败", Toast.LENGTH_SHORT).show();
+                    if (swipeRefreshLayout.isRefreshing()) {
+                        swipeRefreshLayout.setRefreshing(false);
+                    }
                     break;
             }
         };
@@ -171,12 +178,16 @@ public class Activity_user extends AppCompatActivity implements AdapterView.OnIt
 
                     @Override
                     public void onError(Exception e) {
-
+                        Message message = new Message();
+                        message.what = HTTP_ERROR;
+                        mHandler.sendMessage(message);
                     }
 
                     @Override
                     public void onNotFind() {
-
+                        Message message = new Message();
+                        message.what = HTTP_ERROR;
+                        mHandler.sendMessage(message);
                     }
 
 
