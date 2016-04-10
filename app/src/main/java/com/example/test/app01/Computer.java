@@ -1,9 +1,11 @@
 package com.example.test.app01;
 
+import java.io.Serializable;
+
 /**
  * Created by lushangqi on 2016/3/26.
  */
-public class Computer {
+public class Computer implements Serializable{
     private String id;
     private String startTime;
     private String opentotaltime;

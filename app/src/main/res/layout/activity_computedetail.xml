@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+android:orientation="vertical" android:layout_width="match_parent"
+android:layout_height="match_parent">
+    <include layout="@layout/mytitle"
+        android:id="@+id/include" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Large Text"
+        android:id="@+id/textView_id"
+        android:layout_below="@+id/include"
+        android:layout_centerHorizontal="true"
+        android:textSize="20dp"
+        android:layout_marginTop="50dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Large Text"
+        android:textSize="20dp"
+        android:id="@+id/textView_state"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/textView_id" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Large Text"
+        android:textSize="20dp"
+        android:id="@+id/textView_mac"
+        android:layout_below="@+id/textView_state"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Large Text"
+        android:textSize="20dp"
+        android:id="@+id/textView_ip"
+        android:layout_below="@+id/textView_mac"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="ID:"
+        android:textSize="20dp"
+        android:id="@+id/textView_Lid"
+        android:layout_alignTop="@+id/textView_id"
+        android:layout_toLeftOf="@+id/textView_id"
+        android:layout_toStartOf="@+id/textView_id"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="30dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="状态:"
+        android:textSize="20dp"
+        android:id="@+id/textView_Lstate"
+        android:layout_alignTop="@+id/textView_state"
+        android:layout_toLeftOf="@+id/textView_state"
+        android:layout_toStartOf="@+id/textView_state"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="30dp" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="MAC:"
+        android:textSize="20dp"
+        android:id="@+id/textView_LMAC"
+        android:layout_alignTop="@+id/textView_mac"
+        android:layout_toLeftOf="@+id/textView_mac"
+        android:layout_toStartOf="@+id/textView_mac"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="30dp" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="IP:"
+        android:textSize="20dp"
+        android:id="@+id/textView_LIP"
+        android:layout_alignTop="@+id/textView_ip"
+        android:layout_toLeftOf="@+id/textView_ip"
+        android:layout_toStartOf="@+id/textView_ip"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="30dp"
+
+        />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="关机"
+        android:textSize="28dp"
+        android:id="@+id/button_operate"
+        android:background="@mipmap/buttonred"
+        android:layout_marginTop="50dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
+        android:layout_below="@+id/textView_ip"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+
+</RelativeLayout>

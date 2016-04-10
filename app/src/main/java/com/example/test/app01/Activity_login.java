@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Paint;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.nfc.Tag;
@@ -21,6 +22,7 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 import java.lang.StringBuffer;
 /**
@@ -37,9 +39,10 @@ public class Activity_login extends AppCompatActivity  implements View.OnClickLi
     private CheckBox rememberPass;
     private String str_token = new String("test");
     private String TAG = new String("LoginActivity");
-    private boolean isconnect = false;
 
-    ProgressDialog progressDialog;
+    private TextView register_tv;
+
+
 
 
 
@@ -62,6 +65,20 @@ public class Activity_login extends AppCompatActivity  implements View.OnClickLi
         bt_login = (Button)findViewById(R.id.bt_login);
         bt_forget = (Button)findViewById(R.id.bt_forgetPwd);
         rememberPass = (CheckBox)findViewById(R.id.cbRememberPwd);
+        register_tv = (TextView)findViewById(R.id.id_tvregister);
+
+        register_tv.getPaint().setFlags(Paint. UNDERLINE_TEXT_FLAG ); //下划线
+        register_tv.setClickable(true);
+        register_tv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //注册用户
+                Intent intent = new Intent(Activity_login.this, Activity_addPerson.class);
+                startActivity(intent);
+            }
+        });
+
+
         boolean isRemember = pref.getBoolean("remember", false);
         if (isRemember) {
             String user = pref.getString("user", "");
@@ -110,43 +127,11 @@ public class Activity_login extends AppCompatActivity  implements View.OnClickLi
                     break;
                 }
                 Log.d(TAG, "this");
-                isconnect = false;
-                progressDialog = new ProgressDialog(Activity_login.this);
-                progressDialog.setMessage("Loading...");
-                progressDialog.setCancelable(false);
-                progressDialog.show();
                 //此处需要注意执行远程登录函数时，有可能已经主线程的函数已经执行完了
                 LoginConnect(user, passwd);
 
-                try {
-                    Thread.sleep(1000); //暂停，每一秒输出一次
-                }catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
                 Log.d(TAG, "bforechange");
-                if (isconnect) {
-                    progressDialog.dismiss();
-                    editor = pref.edit();
-                    if (rememberPass.isChecked()) {
-                        Log.d(TAG, "rempasswd");
-                        editor.putBoolean("remember", true);
-                        editor.putString("user", user);
-                        editor.putString("passwd", passwd);
-                    } else {
-                        editor.clear();
-                        editor.putString("user", user);
-                    }
-                    editor.commit();
-                    //write here
-                    Log.d(TAG, "toMainactivity");
-                    Intent intent = new Intent(Activity_login.this, Activity_user.class);
-                    intent.putExtra("token", str_token);
-                    startActivity(intent);
-                    finish();
-                } else {
-                    progressDialog.dismiss();
-                    Toast.makeText(Activity_login.this, "连接超时或账号密码错误", Toast.LENGTH_SHORT).show();
-                }
+
                 break;
             }
             case R.id.bt_forgetPwd:
@@ -161,19 +146,6 @@ public class Activity_login extends AppCompatActivity  implements View.OnClickLi
         }
     }
 
-    public String getStr_token(String res) {
-        StringBuffer tmp = new StringBuffer();
-        boolean flag = false;
-        for (int i = 0; i < res.length(); i++) {
-            if (flag && res.charAt(i) != ' ' && res.charAt(i) != '"') {
-                tmp.append(res.charAt(i));
-            }
-            if (res.charAt(i) == ':') {
-                flag = true;
-            }
-        }
-        return tmp.toString();
-    }
 
     public boolean LoginConnect(String user, String passwd) {
         //write here
@@ -184,19 +156,53 @@ public class Activity_login extends AppCompatActivity  implements View.OnClickLi
                     @Override
                     public void onFinish(String response) {
                         Log.d(TAG, response);
-                        str_token = getStr_token(response);
-                        isconnect = true;
+                        str_token = Utility.getStr_token(response);
+                        Activity_login.this.runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                String user = et_user.getText().toString();
+                                String passwd = et_passwd.getText().toString();
+                                editor = pref.edit();
+                                if (rememberPass.isChecked()) {
+                                    Log.d(TAG, "rempasswd");
+                                    editor.putBoolean("remember", true);
+                                    editor.putString("user", user);
+                                    editor.putString("passwd", passwd);
+                                } else {
+                                    editor.clear();
+                                    editor.putString("user", user);
+                                }
+                                editor.commit();
+                                //write here
+                                Log.d(TAG, "tocomputeActivity");
+                                Intent intent = new Intent(Activity_login.this, Activity_compute.class);
+                                intent.putExtra("token", str_token);
+                                startActivity(intent);
+                                finish();
+
+                            }
+                        });
                     }
 
                     @Override
                     public void onError(Exception e) {
                         e.printStackTrace();
-                        isconnect = false;
+                        Activity_login.this.runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(Activity_login.this, "连接超时或账号密码错误", Toast.LENGTH_SHORT).show();
+                            }
+                        });
                     }
 
                     @Override
                     public void onNotFind() {
-                        isconnect = false;
+                        Activity_login.this.runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(Activity_login.this, "连接超时或账号密码错误", Toast.LENGTH_SHORT).show();
+                            }
+                        });
                     }
 
 
@@ -205,7 +211,6 @@ public class Activity_login extends AppCompatActivity  implements View.OnClickLi
         Log.d(TAG, "inconnect");
         if (res) return true;
         else return false;
-
     }
 
 }

@@ -35,5 +35,18 @@ public class Utility {
         return tmpData;
     }
 
+    public static String getStr_token(String res) {
+        StringBuffer tmp = new StringBuffer();
+        boolean flag = false;
+        for (int i = 0; i < res.length(); i++) {
+            if (flag && res.charAt(i) != ' ' && res.charAt(i) != '"') {
+                tmp.append(res.charAt(i));
+            }
+            if (res.charAt(i) == ':') {
+                flag = true;
+            }
+        }
+        return tmp.toString();
+    }
 
 }

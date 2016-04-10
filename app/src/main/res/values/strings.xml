@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">App01</string>
+    <string name="app_name">实验室管理</string>
     <string name="action_settings">Settings</string>
     <string name="person_add">添加用户</string>
     <string name="person_detail">详细信息</string>

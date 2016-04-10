@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <include layout="@layout/mytitle"/>
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:hint="请输入账号"
+        android:ems="10"
+        android:id="@+id/register_name"
+        android:maxLines="2"
+        android:layout_marginTop="75dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPassword"
+        android:ems="10"
+        android:hint="请输入密码"
+        android:id="@+id/register_passwd"
+        android:maxLines="2"
+        android:layout_below="@+id/register_name"
+        android:layout_alignLeft="@+id/register_name"
+        android:layout_alignStart="@+id/register_name" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPassword"
+        android:ems="10"
+        android:hint="请再次输入密码"
+        android:maxLines="2"
+        android:id="@+id/register_passwd2"
+        android:layout_below="@+id/register_passwd"
+        android:layout_alignLeft="@+id/register_passwd"
+        android:layout_alignStart="@+id/register_passwd" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textEmailAddress"
+        android:ems="10"
+        android:hint="请输入邮箱"
+        android:maxLines="2"
+        android:id="@+id/register_email"
+        android:layout_below="@+id/register_passwd2"
+        android:layout_alignLeft="@+id/register_passwd2"
+        android:layout_alignStart="@+id/register_passwd2" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="账号："
+        android:id="@+id/textView_rename"
+        android:layout_alignBaseline="@+id/register_name"
+        android:paddingLeft="20dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="密码："
+        android:id="@+id/textView_passwd"
+        android:layout_alignBaseline="@+id/register_passwd"
+        android:layout_above="@+id/register_passwd2"
+        android:layout_alignRight="@+id/textView_rename"
+        android:layout_alignEnd="@+id/textView_rename" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="密码："
+        android:id="@+id/textView_passwd2"
+        android:layout_alignBaseline="@+id/register_passwd2"
+        android:layout_above="@+id/register_email"
+        android:layout_alignRight="@+id/textView_passwd"
+        android:layout_alignEnd="@+id/textView_passwd" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="邮箱："
+        android:id="@+id/textView_email"
+        android:layout_alignBaseline="@+id/register_email"
+        android:layout_alignRight="@+id/textView_passwd2"
+        android:layout_alignEnd="@+id/textView_passwd2" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="80dp"
+        android:layout_alignParentTop="true"
+        android:id="@+id/imageView_username"
+        android:src="@mipmap/wrong"
+        android:layout_alignBottom="@+id/register_name"
+        android:layout_toRightOf="@+id/register_name"
+        android:layout_toEndOf="@+id/register_name" />
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageView_passwd"
+        android:src="@mipmap/wrong"
+        android:layout_below="@+id/imageView_username"
+        android:layout_alignBottom="@+id/register_passwd"
+        android:layout_toRightOf="@+id/register_passwd"
+        android:layout_toEndOf="@+id/register_passwd" />
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageView_passwd2"
+        android:src="@mipmap/wrong"
+        android:layout_below="@+id/register_passwd"
+        android:layout_alignBottom="@+id/register_passwd2"
+        android:layout_toRightOf="@+id/register_passwd2"
+        android:layout_toEndOf="@+id/register_passwd2" />
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageView_email"
+        android:src="@mipmap/wrong"
+        android:layout_below="@+id/register_passwd2"
+        android:layout_alignBottom="@+id/register_email"
+        android:layout_toRightOf="@+id/register_email"
+        android:layout_toEndOf="@+id/register_email" />
+
+</RelativeLayout>

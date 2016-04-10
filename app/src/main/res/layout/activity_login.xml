@@ -101,6 +101,15 @@
         android:background="@mipmap/button01"
         android:text="登陆" />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="没有账号？点击注册"
+        android:id="@+id/id_tvregister"
+        android:layout_alignParentBottom="true"
+        android:layout_alignRight="@+id/bt_login"
+        android:layout_alignEnd="@+id/bt_login" />
 
 
-</RelativeLayout> 
+</RelativeLayout>

@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <include layout="@layout/mytitle"/>
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:hint="请输入名字"
+        android:ems="10"
+        android:id="@+id/compute_name"
+        android:layout_marginTop="75dp"
+        android:layout_alignParentTop="true"
+        android:maxLines="2"
+        android:layout_centerHorizontal="true" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:maxLines="2"
+        android:hint="请输入MAC"
+        android:id="@+id/compute_mac"
+        android:layout_below="@+id/compute_name"
+        android:layout_alignLeft="@+id/compute_name"
+        android:layout_alignStart="@+id/compute_name" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:maxLines="2"
+        android:hint="请输入IP"
+        android:id="@+id/compute_ip"
+        android:layout_below="@+id/compute_mac"
+        android:layout_alignLeft="@+id/compute_mac"
+        android:layout_alignStart="@+id/compute_mac" />
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="名字："
+        android:id="@+id/textView_computename"
+        android:layout_alignBaseline="@+id/compute_name"
+        android:paddingLeft="20dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="MAC："
+        android:id="@+id/textView_mac"
+        android:layout_alignBaseline="@+id/compute_mac"
+        android:layout_above="@+id/compute_ip"
+        android:layout_alignRight="@+id/textView_computename"
+        android:layout_alignEnd="@+id/textView_computename" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="IP："
+        android:id="@+id/textView_ip"
+        android:layout_alignBaseline="@+id/compute_ip"
+        android:layout_below="@+id/compute_mac"
+        android:layout_alignRight="@+id/textView_mac"
+        android:layout_alignEnd="@+id/textView_mac" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="80dp"
+        android:layout_alignParentTop="true"
+        android:id="@+id/imageView_computename"
+        android:src="@mipmap/wrong"
+        android:layout_alignBottom="@+id/compute_name"
+        android:layout_toRightOf="@+id/compute_name"
+        android:layout_toEndOf="@+id/compute_name" />
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageView_computemac"
+        android:src="@mipmap/wrong"
+        android:layout_below="@+id/imageView_computename"
+        android:layout_alignBottom="@+id/compute_mac"
+        android:layout_toRightOf="@+id/compute_mac"
+        android:layout_toEndOf="@+id/compute_mac" />
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageView_computeip"
+        android:src="@mipmap/wrong"
+        android:layout_below="@+id/imageView_computemac"
+        android:layout_alignBottom="@+id/compute_ip"
+        android:layout_toRightOf="@+id/compute_ip"
+        android:layout_toEndOf="@+id/compute_ip" />
+
+
+</RelativeLayout>

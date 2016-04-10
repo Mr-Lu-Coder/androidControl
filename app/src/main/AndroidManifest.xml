@@ -22,8 +22,10 @@
             </intent-filter>
         </activity>
         <activity android:name=".Activity_forget" />
-        <activity android:name=".Activity_group"></activity>
-        <activity android:name=".Activity_user"></activity>
+        <activity android:name=".Activity_addPerson" />
+        <activity android:name=".Activity_addCompute" />
+        <activity android:name=".Activity_computeDetail" />
+        <activity android:name=".Activity_compute"></activity>
     </application>
 
 </manifest>
