@@ -8,7 +8,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
-
+/**
+ * 机器详细
+ */
 public class Activity_computeDetail extends AppCompatActivity {
     private TextView tv_id;
     private TextView tv_state;
@@ -26,7 +28,7 @@ public class Activity_computeDetail extends AppCompatActivity {
 
     private Computer curcompute;
     private String address = " ";
-    private String prestr = " ";
+    private String tostatestr = " ";
     private String reversestate = " ";
 
     @Override
@@ -91,17 +93,21 @@ public class Activity_computeDetail extends AppCompatActivity {
 
     }
 
-
+    /**
+     * 改变机器的开关机状态
+     * @param tostate
+     * @return
+     */
     public boolean changeState(final int tostate)
     {
 
         switch (tostate) {
             case TO_SETUP:
-                prestr = "开机";
+                tostatestr = "开机";
                 address = Hostname.hostname + "openip/" + token + "/" + curcompute.getIp().toString() + "/";
                 break;
             case TO_SHUTDOWN:
-                prestr = "开机";
+                tostatestr = "关机";
                 address = Hostname.hostname + "closeip/" + token + "/" + curcompute.getIp().toString() + "/";
                 break;
             default:
@@ -114,12 +120,14 @@ public class Activity_computeDetail extends AppCompatActivity {
                 Activity_computeDetail.this.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        Toast.makeText(Activity_computeDetail.this, prestr+"成功", Toast.LENGTH_SHORT).show();
-                        if (prestr.equals("关机")) {
+                        Toast.makeText(Activity_computeDetail.this, tostatestr+"成功", Toast.LENGTH_SHORT).show();
+                        if (tostatestr.equals("关机")) {
                             button.setText("开机");
+                            tv_state.setText("关机");
                             button.setBackgroundResource(R.mipmap.button01);
                         }else {
                             button.setText("关机");
+                            tv_state.setText("开机");
                             button.setBackgroundResource(R.mipmap.buttonred);
                         }
                     }
@@ -131,17 +139,21 @@ public class Activity_computeDetail extends AppCompatActivity {
                 Activity_computeDetail.this.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        Toast.makeText(Activity_computeDetail.this, prestr+"失败1", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(Activity_computeDetail.this, tostatestr+"失败1", Toast.LENGTH_SHORT).show();
                     }
                 });
             }
 
             @Override
-            public void onNotFind() {
+            public void onNotFind(final int rescode) {
                 Activity_computeDetail.this.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        Toast.makeText(Activity_computeDetail.this, prestr+"失败2", Toast.LENGTH_SHORT).show();
+                        if(rescode/100 == 4)
+                            Toast.makeText(Activity_computeDetail.this, "连接超时关机失败", Toast.LENGTH_SHORT).show();
+                        else
+                            Toast.makeText(Activity_computeDetail.this, "服务器内部错误", Toast.LENGTH_SHORT).show();
+
                     }
                 });
             }

@@ -26,7 +26,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import java.lang.StringBuffer;
 /**
- * Created by lushangqi on 2016/3/9.
+ * 登录
  */
 public class Activity_login extends AppCompatActivity  implements View.OnClickListener{
 
@@ -106,6 +106,11 @@ public class Activity_login extends AppCompatActivity  implements View.OnClickLi
         super.onDestroy();
         ActivityCollector.removeActivity(this);
     }
+
+    /**
+     * 对按钮设置监听，根据按钮ID执行不同的事件
+     * @param v
+     */
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -146,7 +151,12 @@ public class Activity_login extends AppCompatActivity  implements View.OnClickLi
         }
     }
 
-
+    /**
+     * 发送登录请求
+     * @param user
+     * @param passwd
+     * @return
+     */
     public boolean LoginConnect(String user, String passwd) {
         //write here
 
@@ -196,11 +206,15 @@ public class Activity_login extends AppCompatActivity  implements View.OnClickLi
                     }
 
                     @Override
-                    public void onNotFind() {
+                    public void onNotFind(final int rescode) {
                         Activity_login.this.runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                Toast.makeText(Activity_login.this, "连接超时或账号密码错误", Toast.LENGTH_SHORT).show();
+                                if(rescode/100 == 4)
+                                    Toast.makeText(Activity_login.this, "连接超时或账号密码错误", Toast.LENGTH_SHORT).show();
+                                else
+                                    Toast.makeText(Activity_login.this, "服务器内部错误", Toast.LENGTH_SHORT).show();
+
                             }
                         });
                     }

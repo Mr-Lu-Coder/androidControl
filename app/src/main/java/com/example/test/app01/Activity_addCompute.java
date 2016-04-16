@@ -19,7 +19,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
+/**
+ * 添加机器
+ */
 public class Activity_addCompute extends AppCompatActivity {
 
     private EditText name;
@@ -86,6 +88,10 @@ public class Activity_addCompute extends AppCompatActivity {
 
     }
 
+    /**
+     * 发送HttpPost请求
+     * @return
+     */
     public boolean sendHttpPost()
     {
         List<NameValuePair> params = new ArrayList<NameValuePair>();
@@ -113,23 +119,32 @@ public class Activity_addCompute extends AppCompatActivity {
                             @Override
                             public void run() {
 
-                                Toast.makeText(Activity_addCompute.this, "Post失败1", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(Activity_addCompute.this, "连接超时", Toast.LENGTH_SHORT).show();
                             }
                         });
                     }
 
                     @Override
-                    public void onNotFind() {
+                    public void onNotFind(final int rescode) {
                         Activity_addCompute.this.runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                Toast.makeText(Activity_addCompute.this, "Post失败2", Toast.LENGTH_SHORT).show();
+                                if(rescode/100 == 4)
+                                    Toast.makeText(Activity_addCompute.this, "连接超时注册失败", Toast.LENGTH_SHORT).show();
+                                else
+                                    Toast.makeText(Activity_addCompute.this, "服务器内部错误", Toast.LENGTH_SHORT).show();
+
                             }
                         });
                     }
                 });
         return true;
     }
+
+    /**
+     * 检查格式是否正确
+     * @return
+     */
     public boolean checkFormat()
     {
         if (!nameok) {
@@ -146,6 +161,9 @@ public class Activity_addCompute extends AppCompatActivity {
         return true;
     }
 
+    /**
+     * 设置对EditText的监听，检查输入的格式
+     */
     public void setTextListner()
     {
         name.addTextChangedListener(new TextWatcher() {

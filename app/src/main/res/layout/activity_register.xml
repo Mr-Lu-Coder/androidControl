@@ -20,7 +20,7 @@
         android:layout_height="wrap_content"
         android:inputType="textPassword"
         android:ems="10"
-        android:hint="请输入密码"
+        android:hint="请输入密码(至少6位)"
         android:id="@+id/register_passwd"
         android:maxLines="2"
         android:layout_below="@+id/register_name"

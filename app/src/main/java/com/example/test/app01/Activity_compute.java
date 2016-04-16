@@ -8,15 +8,22 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.GridLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
-
+import java.util.Collections;
+import java.util.Comparator;
+/**
+ * 机器列表
+ */
 public class Activity_compute extends AppCompatActivity implements AdapterView.OnItemClickListener{
 
     private final int HTTP_REFRESH = 0;
@@ -35,7 +42,9 @@ public class Activity_compute extends AppCompatActivity implements AdapterView.O
     private Button bt_back;
     private Button bt_edit;
     private TextView tv_title;
-
+    /**
+     * 对异步消息进行处理
+     */
     private Handler mHandler = new Handler()
     {
         public void handleMessage(android.os.Message msg)
@@ -51,6 +60,15 @@ public class Activity_compute extends AppCompatActivity implements AdapterView.O
                         for (Computer computer:mData) {
                             if (computer.getId().equals(tmpcomputer.getId())) {
                                 is_find = true;
+                                if (!computer.equals(tmpcomputer)) {
+                                    should_refresh = true;
+                                    mData.remove(computer);
+                                    //替换掉
+                                    mData.add(tmpcomputer);
+                                    //writehere
+                                }else {
+
+                                }
                                 break;
                             }
                         }
@@ -60,12 +78,15 @@ public class Activity_compute extends AppCompatActivity implements AdapterView.O
                         }
                     }
                     if (should_refresh){
+                        Log.d(TAG, "sort");
+                        Collections.sort(mData, new SortByID());
                         mAdapter.notifyDataSetChanged();
                         Toast.makeText(Activity_compute.this, "刷新成功", Toast.LENGTH_SHORT).show();
                     }
                     else {
                         Toast.makeText(Activity_compute.this, "没有新增的机器", Toast.LENGTH_SHORT).show();
                     }
+
                     Log.d(TAG, "should_refresh"+should_refresh);
                     swipeRefreshLayout.setRefreshing(false);
                     break;
@@ -135,6 +156,7 @@ public class Activity_compute extends AppCompatActivity implements AdapterView.O
 
 
         mContext = Activity_compute.this;
+
         listView = (ListView)findViewById(R.id.id_compute_listview);
         //初始化compute列表
         Initcomputerlist(HTTP_INIT);
@@ -142,8 +164,15 @@ public class Activity_compute extends AppCompatActivity implements AdapterView.O
         mAdapter = new ComputerAdapter((ArrayList<Computer>) mData, mContext);
         listView.setAdapter(mAdapter);
         listView.setOnItemClickListener(this);
+
+        //当列表为空时显示为空
+
     }
 
+    /**
+     * 刷新机器列表
+     * @param STATE
+     */
     public void Initcomputerlist(final int STATE) {
         Log.d(TAG, "curThread"+Thread.currentThread());
         String adress = Hostname.hostname + "compute/" + token + "/";
@@ -168,7 +197,7 @@ public class Activity_compute extends AppCompatActivity implements AdapterView.O
                     }
 
                     @Override
-                    public void onNotFind() {
+                    public void onNotFind(final int rescode) {
                         Message message = new Message();
                         message.what = HTTP_ERROR;
                         mHandler.sendMessage(message);
@@ -181,7 +210,6 @@ public class Activity_compute extends AppCompatActivity implements AdapterView.O
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Toast.makeText(mContext, "你点击了第" + position  + "项", Toast.LENGTH_SHORT).show();
         Computer curcomputer = mData.get(position);
         Intent intent = new Intent(Activity_compute.this, Activity_computeDetail.class);
         intent.putExtra("token", token);
@@ -190,9 +218,27 @@ public class Activity_compute extends AppCompatActivity implements AdapterView.O
         startActivity(intent);
     }
 
+
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
         ActivityCollector.removeActivity(this);
+    }
+}
+
+/**
+ * 对列表机器中按ID从小到大排序
+ */
+class SortByID implements Comparator{
+    @Override
+    public int compare(Object o1, Object o2) {
+        Computer c1 = (Computer)o1;
+        Computer c2 = (Computer)o2;
+        if (Double.parseDouble(c1.getId()) < Double.parseDouble(c2.getId())) {
+            return -1;
+        }else {
+            return 1;
+        }
     }
 }

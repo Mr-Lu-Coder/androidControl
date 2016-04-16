@@ -15,7 +15,9 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * Created by lushangqi on 2016/3/10.
+ * Person类适配器
+ * 实现在自定义ListView中的加载
+ * 在ListView中显示机器的ID,name,role
  */
 
 public class PersonAdapter extends BaseAdapter {

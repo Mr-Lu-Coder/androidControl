@@ -1,7 +1,7 @@
 package com.example.test.app01;
 
 /**
- * Created by lushangqi on 2016/3/26.
+ * Confirm类
  */
 public class Confirm {
     private String id;

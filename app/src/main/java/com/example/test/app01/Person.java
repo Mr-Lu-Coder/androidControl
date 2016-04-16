@@ -3,7 +3,8 @@ package com.example.test.app01;
 import java.io.Serializable;
 
 /**
- * Created by lushangqi on 2016/3/10.
+ * Person类
+ * 实现Serializable接口来实现活动之间对Computer对象的数据传递
  */
 
 public class Person implements Serializable {

@@ -10,7 +10,9 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 /**
- * Created by lushangqi on 2016/4/2.
+ * Computer类适配器
+ * 实现在自定义ListView中的加载
+ * 在ListView中显示机器的ID,name,state
  */
 public class ComputerAdapter extends BaseAdapter{
     private ArrayList<Computer> mData;

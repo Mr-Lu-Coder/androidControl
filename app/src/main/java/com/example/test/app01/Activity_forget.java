@@ -6,7 +6,7 @@ import android.view.View;
 import android.view.Window;
 
 /**
- * Created by lushangqi on 2016/3/9.
+ * 忘记密码
  */
 public class Activity_forget extends AppCompatActivity {
 

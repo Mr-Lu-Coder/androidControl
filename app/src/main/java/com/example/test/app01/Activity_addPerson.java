@@ -21,7 +21,9 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-
+/**
+ * 注册用户
+ */
 public class Activity_addPerson extends AppCompatActivity {
     private EditText name;
     private EditText passwd;
@@ -92,6 +94,11 @@ public class Activity_addPerson extends AppCompatActivity {
 
     }
 
+    /**
+     * 通过HttpGet方式获得默认的Token
+     * 注册用户时Url请求有token验证
+     * @return
+     */
     public boolean getDefaulttoken() {
         boolean res = HttpUtil.sendHttpRequest(Activity_addPerson.this, Hostname.hostname+
                         "username/" + Hostname.defaultname + "/" + Hostname.defaultpasswd + "/",
@@ -125,12 +132,16 @@ public class Activity_addPerson extends AppCompatActivity {
 
                     }
                     @Override
-                    public void onNotFind() {
+                    public void onNotFind(final int rescode) {
                         //主线程进行操作
                         Activity_addPerson.this.runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                Toast.makeText(Activity_addPerson.this, "获取token失败2", Toast.LENGTH_SHORT).show();
+                                if(rescode/100 == 4)
+                                    Toast.makeText(Activity_addPerson.this, "连接超时", Toast.LENGTH_SHORT).show();
+                                else
+                                    Toast.makeText(Activity_addPerson.this, "服务器内部错误", Toast.LENGTH_SHORT).show();
+
                             }
                         });
                     }
@@ -141,11 +152,17 @@ public class Activity_addPerson extends AppCompatActivity {
         return true;
     }
 
+    /**
+     * 发送HttpPost注册用户
+     * @return
+     */
     public boolean sendPostRequest() {
         List<NameValuePair> params = new ArrayList<NameValuePair>();
         params.add(new BasicNameValuePair("name", name.getText().toString()));
         params.add(new BasicNameValuePair("email", email.getText().toString()));
-        params.add(new BasicNameValuePair("passwd", passwd.getText().toString()));
+        MD5 md5 = new MD5();
+        Log.d(TAG, md5.GetMD5Code(passwd.getText().toString()));
+        params.add(new BasicNameValuePair("passwd", md5.GetMD5Code(passwd.getText().toString())));
         params.add(new BasicNameValuePair("role", "普通用户"));
         String address = Hostname.hostname+"user/"+token+"/";
         boolean res = HttpUtil.sendHttprequestPost(Activity_addPerson.this, address, params,
@@ -174,11 +191,15 @@ public class Activity_addPerson extends AppCompatActivity {
                     }
 
                     @Override
-                    public void onNotFind() {
+                    public void onNotFind(final int rescode) {
                         Activity_addPerson.this.runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                Toast.makeText(Activity_addPerson.this, "Post失败2", Toast.LENGTH_SHORT).show();
+                                if(rescode/100 == 4)
+                                    Toast.makeText(Activity_addPerson.this, "注册失败", Toast.LENGTH_SHORT).show();
+                                else
+                                    Toast.makeText(Activity_addPerson.this, "服务器内部错误", Toast.LENGTH_SHORT).show();
+
                             }
                         });
                     }
@@ -186,7 +207,10 @@ public class Activity_addPerson extends AppCompatActivity {
         return true;
     }
 
-
+    /**
+     * 检查用户输入的格式
+     * @return
+     */
     public boolean checkformat() {
         if (!nameok) {
             Toast.makeText(Activity_addPerson.this, "请输入名字", Toast.LENGTH_SHORT).show();
@@ -210,7 +234,9 @@ public class Activity_addPerson extends AppCompatActivity {
         return true;
     }
 
-
+    /**
+     * 对EditText设置监听，检查格式
+     */
     public void setTextListener()
     {
 
